@@ -14,7 +14,7 @@ const { section, index } = Astro.props;
     <p>
       {section.chinese.text.map(part => {
         if (part.type === 'annotation') {
-          return <span class="annotation" data-note={part.note}>{part.content}</span>
+          return <span class="footnote-tooltip" data-note={part.note}>{part.content}</span>
         }
         return part.content;
       })}
@@ -54,13 +54,13 @@ const { section, index } = Astro.props;
     color: var(--color-text-primary);
   }
 
-  .annotation {
+  .footnote-tooltip {
     border-bottom: 1px dashed var(--color-accent);
     cursor: help;
     position: relative;
   }
 
-  .annotation:hover::after {
+  .footnote-tooltip:hover::after {
     content: attr(data-note);
     position: absolute;
     bottom: 100%;
@@ -69,12 +69,15 @@ const { section, index } = Astro.props;
     background: var(--color-bg-primary);
     border: 1px solid var(--color-border);
     border-radius: 0.25rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     font-size: 0.9rem;
-    white-space: nowrap;
-    z-index: 10;
+    color: var(--color-text-primary);
+    white-space: normal;
+    width: max(200px, min(300px, 100vw - 40px));
+    line-height: 1.5;
+    z-index: 1000;
     margin-bottom: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
   .footnote-ref {
@@ -117,6 +120,12 @@ const { section, index } = Astro.props;
 
     .english-text {
       font-size: 1rem;
+    }
+
+    .footnote-tooltip:hover::after {
+      width: calc(100vw - 40px);
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 </style>
