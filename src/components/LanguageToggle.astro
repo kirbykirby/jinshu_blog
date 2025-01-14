@@ -1,0 +1,85 @@
+---
+---
+
+<div class="language-toggle">
+    <button class="toggle-btn active" data-lang="both">中英對照 Bilingual</button>
+    <button class="toggle-btn" data-lang="chinese">中文 Chinese</button>
+    <button class="toggle-btn" data-lang="english">English</button>
+  </div>
+  
+  <style>
+    .language-toggle {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+  
+    .toggle-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-secondary);
+      color: var(--color-text-secondary);
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+  
+    .toggle-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-text-primary);
+    }
+  
+    .toggle-btn.active {
+      background: var(--color-accent);
+      color: var(--color-bg-primary);
+      border-color: var(--color-accent);
+    }
+  
+    @media (max-width: 768px) {
+      .language-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+  
+  <script>
+    // Language toggle functionality
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    const translationSections = document.querySelectorAll('.translation-section');
+  
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const lang = button.getAttribute('data-lang');
+        
+        // Update active button
+        toggleButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+  
+        // Update content visibility
+        translationSections.forEach(section => {
+          const chineseText = section.querySelector('.chinese-text');
+          const englishText = section.querySelector('.english-text');
+  
+          switch(lang) {
+            case 'both':
+              chineseText.style.display = 'block';
+              englishText.style.display = 'block';
+              section.style.flexDirection = window.innerWidth > 1024 ? 'row' : 'column';
+              break;
+            case 'chinese':
+              chineseText.style.display = 'block';
+              englishText.style.display = 'none';
+              section.style.flexDirection = 'column';
+              break;
+            case 'english':
+              chineseText.style.display = 'none';
+              englishText.style.display = 'block';
+              section.style.flexDirection = 'column';
+              break;
+          }
+        });
+      });
+    });
+  </script>

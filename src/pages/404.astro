@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+---
+
+<Layout title="404 - Page Not Found | Book of Jin">
+  <Sidebar />
+  <main>
+    <div class="error-container">
+      <div class="error-content">
+        <div class="error-code">
+          <span class="four">4</span>
+          <div class="seal">
+            <span class="chinese">晉</span>
+          </div>
+          <span class="four">4</span>
+        </div>
+        <h1>
+          <span class="chinese-title">卷帙未尋</span>
+          <span class="english-title">Page Not Found</span>
+        </h1>
+        <p class="error-message">
+          The manuscript you are looking for appears to be lost in the vastness of history.
+        </p>
+        <div class="suggestions">
+          <p>You might want to:</p>
+          <ul>
+            <li>Check the imperial archives (our homepage)</li>
+            <li>Consult the court historians (search function)</li>
+            <li>Browse our existing chronicles</li>
+          </ul>
+        </div>
+        <a href="/" class="return-home">
+          Return to Imperial Archives
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 17L3 10L10 3M3 10H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <div class="decorative-pattern"></div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .error-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 4rem 2rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .error-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .decorative-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
+    background-size: 40px 40px;
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  .error-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .four {
+    font-size: 6rem;
+    font-weight: bold;
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .seal {
+    width: 80px;
+    height: 80px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-15deg);
+    box-shadow: 0 0 20px rgba(100, 108, 255, 0.3);
+  }
+
+  .seal .chinese {
+    font-family: var(--font-chinese);
+    font-size: 3rem;
+    color: var(--color-bg-primary);
+  }
+
+  .chinese-title {
+    display: block;
+    font-family: var(--font-chinese);
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .english-title {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+  }
+
+  .error-message {
+    color: var(--color-text-secondary);
+    margin: 2rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .suggestions {
+    margin: 2rem auto;
+    max-width: 400px;
+    text-align: left;
+  }
+
+  .suggestions p {
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .suggestions ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .suggestions li {
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .suggestions li::before {
+    content: "•";
+    color: var(--color-accent);
+    position: absolute;
+    left: 0;
+  }
+
+  .return-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .return-home:hover {
+    border-color: var(--color-accent);
+    transform: translateX(-4px);
+  }
+
+  @media (max-width: 768px) {
+    main {
+      margin-left: 0;
+      padding: 1rem;
+    }
+
+    .error-container {
+      padding: 3rem 1.5rem;
+    }
+
+    .four {
+      font-size: 4rem;
+    }
+
+    .seal {
+      width: 60px;
+      height: 60px;
+    }
+
+    .seal .chinese {
+      font-size: 2rem;
+    }
+
+    .chinese-title {
+      font-size: 2rem;
+    }
+
+    .english-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>

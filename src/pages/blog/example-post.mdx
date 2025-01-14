@@ -1,0 +1,30 @@
+---
+layout: ../../layouts/BlogPost.astro
+title: The Evolution of Medieval Manuscripts
+pubDate: 2024-01-15
+author: Dr. Jane Smith
+---
+
+import References from '../../components/References.astro';
+
+export const references = [
+  {
+    id: "ref1",
+    text: "Thompson, Daniel V. (1956). The Materials and Techniques of Medieval Painting. Dover Publications."
+  },
+  {
+    id: "ref2",
+    text: "De Hamel, Christopher (1992). Medieval Craftsmen: Scribes and Illuminators. University of Toronto Press."
+  }
+];
+
+The art of manuscript illumination reached its peak during <span className="annotation" data-note="This period spans roughly from the 11th to the 13th centuries">the High Middle Ages</span>. The intricate process of creating these manuscripts involved multiple craftspeople, from scribes to illustrators[^1].
+
+The most notable developments occurred in scriptoria across Europe[^ref1], where monks dedicated their lives to preserving knowledge. These centers of learning became crucial for the transmission of classical texts[^2].
+
+The materials used in manuscript production were incredibly valuable[^ref2]. <span className="annotation" data-note="Parchment was made primarily from sheep, goat, or calf skin">Parchment, made from carefully prepared animal skins, served as the primary writing surface</span>.
+
+<References references={references} />
+
+[^1]: Scribes would first lay out the text, leaving spaces for illuminated initials and illustrations.
+[^2]: The preservation of these texts played a crucial role in the transmission of ancient knowledge through the Middle Ages.

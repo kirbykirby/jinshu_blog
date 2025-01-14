@@ -1,0 +1,22 @@
+{
+  "name": "@example/basics",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.15.3",
+    "remark": "^14.0.3",
+    "remark-parse": "^10.0.2",
+    "unified": "^10.1.2",
+    "unist-util-visit": "^4.1.2",
+    "@fontsource/merriweather": "^5.0.8",
+    "@astrojs/mdx": "^2.1.1"
+  }
+}

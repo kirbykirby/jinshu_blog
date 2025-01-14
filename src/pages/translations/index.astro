@@ -1,0 +1,257 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Footer from '../../components/Footer.astro';
+import { categories } from '../../lib/data/navigation';
+
+const allCategories = [
+  {
+    id: "imperial-chronicles",
+    title: "帝紀 Imperial Chronicles",
+    description: "Chronicles of Jin dynasty emperors",
+    chapters: Array.from({ length: 10 }, (_, i) => ({
+      number: `卷${i + 1}`,
+      title: `晉${['武', '惠', '懷', '愍', '元', '明', '成', '康', '穆', '哀'][i]}帝紀`,
+      href: `/translations/imperial-chronicles#chapter-${i + 1}`,
+      translation: `Chronicle of Emperor ${['Wu', 'Hui', 'Huai', 'Min', 'Yuan', 'Ming', 'Cheng', 'Kang', 'Mu', 'Ai'][i]}`
+    }))
+  },
+  {
+    id: "biographies",
+    title: "列傳 Biographies",
+    description: "Biographies of notable figures",
+    chapters: Array.from({ length: 70 }, (_, i) => ({
+      number: `卷${i + 11}`,
+      title: `列傳第${i + 1}`,
+      href: `/translations/biographies#chapter-${i + 11}`,
+      translation: `Biography ${i + 1}`
+    }))
+  },
+  {
+    id: "treatises",
+    title: "志 Treatises",
+    description: "Specialized treatises on various subjects",
+    chapters: Array.from({ length: 30 }, (_, i) => ({
+      number: `卷${i + 81}`,
+      title: `志第${i + 1}`,
+      href: `/translations/treatises#chapter-${i + 81}`,
+      translation: `Treatise ${i + 1}`
+    }))
+  },
+  {
+    id: "records",
+    title: "載記 Chronicles",
+    description: "Historical records and chronicles",
+    chapters: Array.from({ length: 20 }, (_, i) => ({
+      number: `卷${i + 111}`,
+      title: `載記第${i + 1}`,
+      href: `/translations/records#chapter-${i + 111}`,
+      translation: `Chronicle ${i + 1}`
+    }))
+  }
+];
+---
+
+<Layout title="目录 Table of Contents | Book of Jin">
+  <Sidebar />
+  <main class="translations-container">
+    <div class="translations-content">
+      <header class="page-header">
+        <h1>
+          <span class="title-chinese">晉書目錄</span>
+          <span class="title-english">Table of Contents</span>
+        </h1>
+        <p class="subtitle">Complete contents of the Book of Jin, comprising 130 chapters across four categories</p>
+      </header>
+
+      <nav class="category-navigation">
+        <ul>
+          {allCategories.map(category => (
+            <li>
+              <a href={`#${category.id}`}>{category.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="categories-list">
+        {allCategories.map(category => (
+          <section id={category.id} class="category-section">
+            <div class="category-header">
+              <h2>{category.title}</h2>
+              <p>{category.description}</p>
+            </div>
+            <div class="chapters-grid">
+              {category.chapters.map(chapter => (
+                <a href={chapter.href} class="chapter-card">
+                  <div class="chapter-content">
+                    <div class="chapter-number">{chapter.number}</div>
+                    <h3 class="chapter-title">
+                      <span class="chinese">{chapter.title}</span>
+                      <span class="english">{chapter.translation}</span>
+                    </h3>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+    <Footer />
+  </main>
+</Layout>
+
+<style>
+  .translations-container {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .translations-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    width: 100%;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .title-chinese {
+    display: block;
+    font-family: var(--font-chinese);
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .title-english {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+  }
+
+  .subtitle {
+    margin-top: 1rem;
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+  }
+
+  .category-navigation {
+    margin-bottom: 3rem;
+  }
+
+  .category-navigation ul {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .category-navigation a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+
+  .category-navigation a:hover {
+    color: var(--color-accent);
+  }
+
+  .category-section {
+    margin-bottom: 4rem;
+  }
+
+  .category-header {
+    margin-bottom: 2rem;
+  }
+
+  .category-header h2 {
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .category-header p {
+    color: var(--color-text-secondary);
+  }
+
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .chapter-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .chapter-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .chapter-content {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .chapter-number {
+    font-family: var(--font-chinese);
+    color: var(--color-accent);
+    font-size: 1.1rem;
+    white-space: nowrap;
+  }
+
+  .chapter-title {
+    flex: 1;
+  }
+
+  .chapter-title .chinese {
+    display: block;
+    font-family: var(--font-chinese);
+    font-size: 1.1rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .chapter-title .english {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .translations-container {
+      margin-left: 0;
+    }
+
+    .translations-content {
+      padding: 2rem 1rem;
+    }
+
+    .category-navigation ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chapters-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

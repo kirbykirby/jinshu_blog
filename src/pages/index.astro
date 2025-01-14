@@ -1,0 +1,360 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Book of Jin (晉書) Translation Archive">
+	<Sidebar />
+	<main>
+		<div class="hero">
+			<div class="hero-content">
+				<div class="title-container">
+					<h1>
+						<span class="chinese">晉書</span>
+						<span class="english">Book of Jin</span>
+					</h1>
+					<p class="subtitle">A Digital Translation Archive</p>
+				</div>
+				<div class="search-container">
+					<SearchBar />
+				</div>
+			</div>
+			<div class="decorative-pattern"></div>
+		</div>
+
+		<div class="content-wrapper">
+			<section class="featured-section">
+				<div class="section-header">
+					<h2>Featured Translations</h2>
+					<a href="/translations" class="view-all">View All</a>
+				</div>
+				<div class="featured-grid">
+					<a href="/translations/imperial-chronicles" class="featured-card">
+						<div class="card-content">
+							<span class="category">Imperial Chronicles</span>
+							<h3>
+								<span class="chinese-title">晉武帝紀</span>
+								<span class="english-title">Chronicle of Emperor Wu</span>
+							</h3>
+							<p>Explore the founding of the Jin dynasty and the reign of its first emperor.</p>
+						</div>
+					</a>
+					<a href="/biographies/wang-dao" class="featured-card">
+						<div class="card-content">
+							<span class="category">Biographies</span>
+							<h3>
+								<span class="chinese-title">王導傳</span>
+								<span class="english-title">Biography of Wang Dao</span>
+							</h3>
+							<p>The life and career of a prominent statesman in early Jin.</p>
+						</div>
+					</a>
+				</div>
+			</section>
+
+			<div class="two-column-grid">
+				<section class="updates-section">
+					<div class="section-header">
+						<h2>Latest Updates</h2>
+						<a href="/updates" class="view-all">View All</a>
+					</div>
+					<div class="updates-list">
+						<a href="/translations/imperial-chronicles" class="update-item">
+							<span class="date">2024-01-22</span>
+							<div class="update-content">
+								<h3>New Translation: Chronicle of Emperor Wu</h3>
+								<p>Complete translation with annotations and historical context</p>
+							</div>
+						</a>
+						<a href="/treatises/astronomy" class="update-item">
+							<span class="date">2024-01-20</span>
+							<div class="update-content">
+								<h3>New Translation: Treatise on Astronomy</h3>
+								<p>Exploring celestial observations and astronomical records</p>
+							</div>
+						</a>
+					</div>
+				</section>
+
+				<section class="categories-section">
+					<div class="section-header">
+						<h2>Browse by Category</h2>
+					</div>
+					<div class="category-grid">
+						<a href="/imperial-chronicles" class="category-card">
+							<h3>帝紀</h3>
+							<span>Imperial Chronicles</span>
+						</a>
+						<a href="/biographies" class="category-card">
+							<h3>列傳</h3>
+							<span>Biographies</span>
+						</a>
+						<a href="/treatises" class="category-card">
+							<h3>志</h3>
+							<span>Treatises</span>
+						</a>
+						<a href="/records" class="category-card">
+							<h3>載記</h3>
+							<span>Chronicles</span>
+						</a>
+					</div>
+				</section>
+			</div>
+		</div>
+		<Footer />
+	</main>
+</Layout>
+
+<style>
+	main {
+		padding: 0;
+		margin-left: var(--sidebar-width);
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.hero {
+		position: relative;
+		padding: 4rem 2rem;
+		background: var(--color-bg-secondary);
+		border-bottom: 1px solid var(--color-border);
+		overflow: hidden;
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 2;
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	.title-container {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.chinese {
+		display: block;
+		font-family: var(--font-chinese);
+		font-size: clamp(3rem, 8vw, 5rem);
+		color: var(--color-accent);
+		margin-bottom: 0.5rem;
+		line-height: 1.2;
+	}
+
+	.english {
+		display: block;
+		font-size: clamp(1.5rem, 4vw, 2.5rem);
+		color: var(--color-text-secondary);
+		line-height: 1.2;
+	}
+
+	.subtitle {
+		font-size: clamp(1rem, 2vw, 1.25rem);
+		color: var(--color-text-secondary);
+		margin: 1rem 0 2rem;
+	}
+
+	.decorative-pattern {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
+		background-size: 40px 40px;
+		opacity: 0.1;
+		z-index: 1;
+	}
+
+	.content-wrapper {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 3rem 2rem;
+		width: 100%;
+	}
+
+	.section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 2rem;
+	}
+
+	.section-header h2 {
+		font-size: 1.5rem;
+		color: var(--color-text-primary);
+		margin: 0;
+	}
+
+	.view-all {
+		color: var(--color-accent);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.featured-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+		margin-bottom: 3rem;
+	}
+
+	.featured-card {
+		background: var(--color-bg-secondary);
+		border: 1px solid var(--color-border);
+		border-radius: 0.5rem;
+		padding: 2rem;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.featured-card:hover {
+		border-color: var(--color-accent);
+		transform: translateY(-2px);
+	}
+
+	.category {
+		display: inline-block;
+		font-size: 0.8rem;
+		color: var(--color-accent);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		margin-bottom: 1rem;
+	}
+
+	.chinese-title {
+		display: block;
+		font-family: var(--font-chinese);
+		font-size: 1.5rem;
+		color: var(--color-text-primary);
+		margin-bottom: 0.25rem;
+	}
+
+	.english-title {
+		display: block;
+		font-size: 1rem;
+		color: var(--color-text-secondary);
+		margin-bottom: 1rem;
+	}
+
+	.featured-card p {
+		color: var(--color-text-secondary);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.two-column-grid {
+		display: grid;
+		grid-template-columns: 2fr 1fr;
+		gap: 3rem;
+	}
+
+	.updates-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.update-item {
+		display: flex;
+		gap: 1.5rem;
+		padding: 1rem;
+		background: var(--color-bg-secondary);
+		border: 1px solid var(--color-border);
+		border-radius: 0.5rem;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.update-item:hover {
+		border-color: var(--color-accent);
+		transform: translateX(4px);
+	}
+
+	.date {
+		font-size: 0.9rem;
+		color: var(--color-text-secondary);
+		white-space: nowrap;
+	}
+
+	.update-content h3 {
+		font-size: 1.1rem;
+		color: var(--color-text-primary);
+		margin: 0 0 0.5rem;
+	}
+
+	.update-content p {
+		font-size: 0.9rem;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.category-grid {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.category-card {
+		background: var(--color-bg-secondary);
+		border: 1px solid var(--color-border);
+		border-radius: 0.5rem;
+		padding: 1.5rem;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.category-card:hover {
+		border-color: var(--color-accent);
+		transform: translateX(4px);
+	}
+
+	.category-card h3 {
+		font-family: var(--font-chinese);
+		font-size: 1.5rem;
+		color: var(--color-text-primary);
+		margin: 0 0 0.25rem;
+	}
+
+	.category-card span {
+		font-size: 0.9rem;
+		color: var(--color-text-secondary);
+	}
+
+	@media (max-width: 1024px) {
+		.two-column-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+	}
+
+	@media (max-width: 768px) {
+		main {
+			margin-left: 0;
+		}
+
+		.hero {
+			padding: 3rem 1rem;
+		}
+
+		.content-wrapper {
+			padding: 2rem 1rem;
+		}
+
+		.featured-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.update-item {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		.date {
+			font-size: 0.8rem;
+		}
+	}
+</style>

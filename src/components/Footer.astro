@@ -1,0 +1,111 @@
+---
+---
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="social-links">
+      <a href="https://github.com/your-username" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+      </a>
+      <a href="https://twitter.com/your-username" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M20 4l-6.768 6.768"></path>
+        </svg>
+      </a>
+      <a href="#" class="social-link wechat-link" aria-label="WeChat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16v16H4z"></path>
+          <path d="M4 4l16 16m0-16L4 20"></path>
+        </svg>
+        <div class="qr-tooltip">
+          <img src="/wechat-qr.png" alt="WeChat QR Code" width="150" height="150" />
+        </div>
+      </a>
+    </div>
+    <div class="footer-text">
+      <p>© {new Date().getFullYear()} Book of Jin Digital Archive. All rights reserved.</p>
+      <p>Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    padding: 3rem 2rem;
+    margin-top: auto;
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .social-link {
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .social-link:hover {
+    color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .wechat-link .qr-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
+
+  .wechat-link:hover .qr-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-8px);
+  }
+
+  .footer-text {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .footer-text a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .footer-text a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      padding: 2rem 1rem;
+    }
+
+    .social-links {
+      gap: 1.5rem;
+    }
+  }
+</style>

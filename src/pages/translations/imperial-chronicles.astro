@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Footer from '../../components/Footer.astro';
+import References from '../../components/References.astro';
+import TranslationSection from '../../components/TranslationSection.astro';
+import LanguageToggle from '../../components/LanguageToggle.astro';
+import type { Section } from '../../lib/types';
+import '../../styles/article.css';
+
+const references = [
+  {
+    id: "ref1",
+    text: "Fang, Xuanling 房玄齡 et al. (648). Jin Shu 晉書 [Book of Jin]. Vol. 1."
+  },
+  {
+    id: "ref2",
+    text: "Rogers, Michael (1968). The Chronicle of Fu Chien: A Case of Exemplar History. University of California Press."
+  },
+  {
+    id: "ref3",
+    text: "Graff, David (2002). Medieval Chinese Warfare, 300-900. Routledge."
+  }
+];
+
+const sections: Section[] = [
+  {
+    chinese: {
+      text: [
+        { type: 'text', content: '晉武帝' },
+        { type: 'annotation', content: '泰始', note: 'Taishi was Emperor Wu\'s first era name, spanning from 265 to 274 CE' },
+        { type: 'text', content: '元年春正月，大赦天下，改元。二月，立貴嬪楊氏為皇后。三月，以' },
+        { type: 'annotation', content: '太尉', note: 'The Grand Commandant (太尉) was one of the Three Excellencies, the highest officials in the Han and Jin governmental structure' },
+        { type: 'text', content: '司馬望為大將軍、錄尚書事。' }
+      ],
+      ref: "ref1"
+    },
+    english: {
+      text: "In the first month of spring in the first year of Taishi (266 CE), Emperor Wu of Jin declared a general amnesty throughout the realm and changed the era name. In the second month, he elevated Noble Consort Yang to the position of Empress. In the third month, he appointed Grand Commandant Sima Wang as Grand General and Supervisor of the Imperial Secretariat.",
+      ref: "ref1"
+    }
+  }
+];
+---
+
+<Layout title="晉武帝紀 Chronicle of Emperor Wu | Book of Jin">
+  <Sidebar />
+  <main class="article-container">
+    <article class="article-content">
+      <header class="article-header">
+        <h1>
+          <span class="article-title-chinese">晉書 - 武帝紀第一</span>
+          <span class="article-title-english">Book of Jin - Chronicle of Emperor Wu, Part 1</span>
+        </h1>
+        <LanguageToggle />
+      </header>
+
+      <div class="article-body">
+        {sections.map((section, index) => (
+          <TranslationSection section={section} index={index} />
+        ))}
+      </div>
+
+      <References references={references} />
+    </article>
+    <Footer />
+  </main>
+</Layout>

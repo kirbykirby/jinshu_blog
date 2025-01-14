@@ -1,0 +1,103 @@
+/* Article-specific styles */
+.chinese-text {
+  font-family: var(--font-chinese);
+  font-size: 1.2em;
+  line-height: 2;
+  margin: 1em 0;
+}
+
+blockquote {
+  border-left: 4px solid var(--color-primary);
+  margin: 1.5em 0;
+  padding: 0.5em 0 0.5em 1em;
+  background: var(--color-background);
+  font-family: var(--font-chinese);
+}
+
+blockquote + p {
+  margin-top: 1em;
+  padding-left: 1em;
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.section-title {
+  font-family: var(--font-chinese);
+  color: var(--color-primary);
+  margin: 2em 0 1em;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0.5em;
+}
+
+ol {
+  list-style-type: decimal-leading-zero;
+  padding-left: 2.5em;
+}
+
+ol li {
+  margin-bottom: 0.5em;
+  padding-left: 0.5em;
+}
+
+/* Article Layout */
+.article-container {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+/* Article Header */
+.article-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.article-title-chinese {
+  display: block;
+  font-family: var(--font-chinese);
+  font-size: 2.5rem;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.article-title-english {
+  display: block;
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+/* Article Body */
+.article-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .article-container {
+    margin-left: 0;
+  }
+
+  .article-content {
+    padding: 2rem 1rem;
+  }
+
+  .article-title-chinese {
+    font-size: 2rem;
+  }
+
+  .article-title-english {
+    font-size: 1.2rem;
+  }
+}

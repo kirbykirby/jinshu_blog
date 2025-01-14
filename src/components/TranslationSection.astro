@@ -1,0 +1,122 @@
+---
+import type { Section } from '../lib/types';
+
+interface Props {
+  section: Section;
+  index: number;
+}
+
+const { section, index } = Astro.props;
+---
+
+<div class="translation-section">
+  <div class="chinese-text">
+    <p>
+      {section.chinese.text.map(part => {
+        if (part.type === 'annotation') {
+          return <span class="annotation" data-note={part.note}>{part.content}</span>
+        }
+        return part.content;
+      })}
+      <span class="footnote-ref" data-ref={section.chinese.ref}>[{index + 1}]</span>
+    </p>
+  </div>
+  <div class="english-text">
+    <p>
+      {section.english.text}
+      <span class="footnote-ref" data-ref={section.english.ref}>[{index + 1}]</span>
+    </p>
+  </div>
+</div>
+
+<style>
+  .translation-section {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+
+  .chinese-text {
+    flex: 1;
+    font-family: var(--font-chinese);
+    font-size: 1.25rem;
+    line-height: 2;
+    color: var(--color-text-primary);
+  }
+
+  .english-text {
+    flex: 2;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-primary);
+  }
+
+  .annotation {
+    border-bottom: 1px dashed var(--color-accent);
+    cursor: help;
+    position: relative;
+  }
+
+  .annotation:hover::after {
+    content: attr(data-note);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 10;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+    margin-left: 0.2em;
+    color: var(--color-accent);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .footnote-ref:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 1024px) {
+    .translation-section {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .chinese-text, .english-text {
+      flex: none;
+    }
+
+    .chinese-text {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .translation-section {
+      padding: 1.5rem;
+    }
+
+    .chinese-text {
+      font-size: 1.1rem;
+    }
+
+    .english-text {
+      font-size: 1rem;
+    }
+  }
+</style>

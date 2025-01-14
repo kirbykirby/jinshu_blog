@@ -1,0 +1,51 @@
+---
+---
+
+<button class="menu-toggle" aria-label="Toggle navigation menu">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</button>
+
+<style>
+  .menu-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .menu-toggle:hover {
+    background: var(--color-border);
+  }
+
+  /* Desktop styles */
+  @media (min-width: 769px) {
+    .menu-toggle {
+      left: 1rem;
+    }
+
+    .menu-toggle.sidebar-hidden {
+      left: 1rem;
+    }
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: flex;
+      left: 1rem;
+    }
+  }
+</style>

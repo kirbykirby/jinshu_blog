@@ -1,0 +1,254 @@
+---
+---
+
+<div class="search-container">
+  <div class="search-input-wrapper">
+    <input 
+      type="search" 
+      placeholder="Search chapters, passages, or historical figures..." 
+      class="search-input"
+      id="search-input"
+    />
+    <button class="search-button" id="search-button">搜索</button>
+  </div>
+  <div class="search-results" id="search-results"></div>
+</div>
+
+<style>
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .search-input-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+  }
+
+  .search-button {
+    padding: 0 2rem;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background: var(--color-accent);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .search-button:hover {
+    opacity: 0.9;
+  }
+
+  .search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .search-results.active {
+    display: block;
+  }
+
+  .search-result-item {
+    display: block;
+    padding: 1rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 0.2s ease;
+  }
+
+  .search-result-item:last-child {
+    border-bottom: none;
+  }
+
+  .search-result-item:hover {
+    background: var(--color-bg-primary);
+  }
+
+  .result-category {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .result-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .result-title-chinese {
+    display: block;
+    font-family: var(--font-chinese);
+    font-size: 1.1rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .result-title-english {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  .result-excerpt {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .result-excerpt mark {
+    background: rgba(100, 108, 255, 0.2);
+    color: var(--color-accent);
+    padding: 0.1em 0.2em;
+    border-radius: 0.2em;
+  }
+
+  @media (max-width: 768px) {
+    .search-input-wrapper {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .search-button {
+      width: 100%;
+      padding: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  import { searchContent } from '../lib/utils/search';
+
+  class SearchUI {
+    private input: HTMLInputElement;
+    private button: HTMLButtonElement;
+    private resultsContainer: HTMLDivElement;
+    private searchTimeout: number | null = null;
+
+    constructor() {
+      this.input = document.getElementById('search-input') as HTMLInputElement;
+      this.button = document.getElementById('search-button') as HTMLButtonElement;
+      this.resultsContainer = document.getElementById('search-results') as HTMLDivElement;
+      
+      this.init();
+    }
+
+    private init() {
+      this.input.addEventListener('input', () => this.handleInput());
+      this.button.addEventListener('click', () => this.performSearch());
+      this.input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          this.performSearch();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!this.resultsContainer.contains(e.target as Node) && 
+            !this.input.contains(e.target as Node)) {
+          this.hideResults();
+        }
+      });
+    }
+
+    private handleInput() {
+      if (this.searchTimeout) {
+        clearTimeout(this.searchTimeout);
+      }
+
+      this.searchTimeout = setTimeout(() => {
+        this.performSearch();
+      }, 300) as unknown as number;
+    }
+
+    private async performSearch() {
+      const query = this.input.value.trim();
+      
+      if (!query) {
+        this.hideResults();
+        return;
+      }
+
+      try {
+        const results = await searchContent(query);
+        this.displayResults(results);
+      } catch (error) {
+        console.error('Search failed:', error);
+        this.displayError();
+      }
+    }
+
+    private displayResults(results: any[]) {
+      if (results.length === 0) {
+        this.resultsContainer.innerHTML = `
+          <div class="search-result-item">
+            <p class="result-title">No results found</p>
+          </div>
+        `;
+      } else {
+        this.resultsContainer.innerHTML = results.map(result => `
+          <a href="${result.url}" class="search-result-item">
+            <span class="result-category">${result.category}</span>
+            <div class="result-title">
+              <span class="result-title-chinese">${result.title}</span>
+              <span class="result-title-english">${result.englishTitle}</span>
+            </div>
+            <p class="result-excerpt">${result.excerpt}</p>
+          </a>
+        `).join('');
+      }
+
+      this.showResults();
+    }
+
+    private displayError() {
+      this.resultsContainer.innerHTML = `
+        <div class="search-result-item">
+          <p class="result-title">An error occurred while searching</p>
+        </div>
+      `;
+      this.showResults();
+    }
+
+    private showResults() {
+      this.resultsContainer.classList.add('active');
+    }
+
+    private hideResults() {
+      this.resultsContainer.classList.remove('active');
+    }
+  }
+
+  // 初始化搜索UI
+  new SearchUI();
+</script>

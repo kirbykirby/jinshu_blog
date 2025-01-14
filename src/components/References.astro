@@ -1,0 +1,67 @@
+---
+interface Props {
+  references: Array<{
+    id: string;
+    text: string;
+  }>;
+}
+
+const { references } = Astro.props;
+---
+
+<section class="references">
+  <h2>References</h2>
+  <ol>
+    {references.map(ref => (
+      <li id={ref.id} class="reference-item">
+        <a href={`#${ref.id}`} class="reference-anchor">{ref.text}</a>
+      </li>
+    ))}
+  </ol>
+  <h2>Footnotes</h2>
+</section>
+
+<style>
+  .references {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+  }
+
+  ol {
+    list-style: none;
+    counter-reset: references;
+    padding-left: 0;
+  }
+
+  .reference-item {
+    counter-increment: references;
+    margin-bottom: 1rem;
+    padding-left: 2.5rem;
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .reference-item::before {
+    content: "[" counter(references) "]";
+    position: absolute;
+    left: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .reference-anchor {
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .reference-anchor:hover {
+    color: var(--color-accent);
+  }
+</style>
