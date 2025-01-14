@@ -4,68 +4,161 @@ import type { Section } from '../lib/types';
 interface Props {
   section: Section;
   index: number;
+  status?: 'complete' | 'incomplete' | 'needs-improvement';
 }
 
-const { section, index } = Astro.props;
+const { section, index, status } = Astro.props;
+
+const paragraphs = typeof section.english.text === 'string' 
+  ? section.english.text.split('\n').filter(p => p.trim())
+  : section.english.text;
 ---
 
-<div class="translation-section">
-  <div class="chinese-text">
-    <p>
-      {section.chinese.text.map(part => {
-        if (part.type === 'annotation') {
-          return <span class="footnote-tooltip" data-note={part.note}>{part.content}</span>
-        }
-        return part.content;
-      })}
-      <span class="footnote-ref" data-ref={section.chinese.ref}>[{index + 1}]</span>
-    </p>
+<article 
+  class:list={[
+    'translation-section',
+    'group',
+    status && `status-${status}`
+  ]}
+  role="region"
+  aria-label={`Translation section ${index + 1}`}
+>
+  <div class="text-container chinese-text" lang="zh">
+    <div class="text-content">
+      {section.chinese.text.map(part => (
+        part.type === 'annotation' 
+          ? <span 
+              class="footnote-tooltip" 
+              data-note={part.note}
+              role="tooltip"
+              tabindex="0"
+            >
+              {part.content}
+              <span class="tooltip-content">{part.note}</span>
+            </span>
+          : <span>{part.content}</span>
+      ))}
+      {section.chinese.ref && (
+        <a 
+          href={`#ref-${index + 1}`}
+          class="footnote-ref" 
+          data-ref={section.chinese.ref}
+          aria-label={`Reference ${index + 1}`}
+        >
+          [{index + 1}]
+        </a>
+      )}
+    </div>
   </div>
-  <div class="english-text">
-    <p>
-      {section.english.text}
-      <span class="footnote-ref" data-ref={section.english.ref}>[{index + 1}]</span>
-    </p>
+
+  <div class="text-container english-text" lang="en">
+    <div class="text-content">
+      {paragraphs.map((paragraph, i) => (
+        <p class:list={['paragraph', i < paragraphs.length - 1 && 'mb-4']}>
+          {paragraph}
+        </p>
+      ))}
+      {section.english.ref && (
+        <a 
+          href={`#ref-${index + 1}`}
+          class="footnote-ref" 
+          data-ref={section.english.ref}
+          aria-label={`Reference ${index + 1}`}
+        >
+          [{index + 1}]
+        </a>
+      )}
+    </div>
   </div>
-</div>
+</article>
 
 <style>
   .translation-section {
+    --section-padding: clamp(1rem, 4vw, 1.75rem);
+    
     display: flex;
-    gap: 3rem;
-    padding: 2rem;
+    gap: clamp(1.5rem, 5vw, 3rem);
+    padding: var(--section-padding);
+    padding-top: 0rem;
+    padding-bottom: 0rem;
     background: var(--color-bg-secondary);
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.06),
+      0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .translation-section:hover {
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.08),
+      0 8px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .text-content {
+    text-align: justify;
+    text-justify: inter-ideograph;
+    height: 100%;
   }
 
   .chinese-text {
     flex: 1;
     font-family: var(--font-chinese);
-    font-size: 1.25rem;
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
     line-height: 2;
     color: var(--color-text-primary);
   }
 
   .english-text {
-    flex: 2;
-    font-size: 1.1rem;
+    flex: 2.5;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    padding-top: 1.3rem;
     line-height: 1.8;
     color: var(--color-text-primary);
+  }
+
+  .chinese-text .text-content {
+    text-align-last: left;
+  }
+
+  .english-text .text-content {
+    hyphens: auto;
+  }
+
+  .paragraph {
+    text-align: justify;
+    hyphens: auto;
+    opacity: 0.95;
+    transition: opacity 0.2s ease;
+  }
+
+  .paragraph:hover {
+    opacity: 1;
   }
 
   .footnote-tooltip {
     border-bottom: 1px dashed var(--color-accent);
     cursor: help;
     position: relative;
+    transition: all 0.2s ease;
   }
 
-  .footnote-tooltip:hover::after {
-    content: attr(data-note);
+  .tooltip-content {
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(10px);
     background: var(--color-bg-primary);
     border: 1px solid var(--color-border);
     border-radius: 0.25rem;
@@ -73,11 +166,19 @@ const { section, index } = Astro.props;
     font-size: 0.9rem;
     color: var(--color-text-primary);
     white-space: normal;
-    width: max(200px, min(300px, 100vw - 40px));
+    width: clamp(200px, 50vw, 300px);
     line-height: 1.5;
     z-index: 1000;
     margin-bottom: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .footnote-tooltip:hover .tooltip-content,
+  .footnote-tooltip:focus .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 
   .footnote-ref {
@@ -87,10 +188,16 @@ const { section, index } = Astro.props;
     color: var(--color-accent);
     cursor: pointer;
     text-decoration: none;
+    transition: all 0.2s ease;
   }
 
   .footnote-ref:hover {
+    color: var(--color-accent-dark);
     text-decoration: underline;
+  }
+
+  .mb-4 {
+    margin-bottom: 1rem;
   }
 
   @media (max-width: 1024px) {
@@ -99,8 +206,8 @@ const { section, index } = Astro.props;
       gap: 1.5rem;
     }
 
-    .chinese-text, .english-text {
-      flex: none;
+    .text-container {
+      width: 100%;
     }
 
     .chinese-text {
@@ -110,22 +217,24 @@ const { section, index } = Astro.props;
   }
 
   @media (max-width: 768px) {
-    .translation-section {
-      padding: 1.5rem;
-    }
-
-    .chinese-text {
-      font-size: 1.1rem;
-    }
-
+    .chinese-text,
     .english-text {
       font-size: 1rem;
     }
 
-    .footnote-tooltip:hover::after {
+    .tooltip-content {
       width: calc(100vw - 40px);
       left: 50%;
       transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .translation-section,
+    .footnote-tooltip,
+    .tooltip-content,
+    .footnote-ref {
+      transition: none;
     }
   }
 </style>

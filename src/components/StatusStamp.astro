@@ -1,0 +1,80 @@
+---
+interface Props {
+  status: 'complete' | 'incomplete' | 'needs-improvement';
+  className?: string;
+}
+
+const { status, className = '' } = Astro.props;
+
+const statusText = {
+  complete: { zh: '已完成', en: 'Complete' },
+  incomplete: { zh: '未完成', en: 'Incomplete' },
+  'needs-improvement': { zh: '待改善', en: 'Needs Improvement' }
+};
+---
+
+<div class={`status-stamp status-${status} ${className}`}>
+  <span class="stamp-text">
+    <span class="stamp-zh">{statusText[status].zh}</span>
+    <span class="stamp-en">{statusText[status].en}</span>
+  </span>
+</div>
+
+<style>
+  .status-stamp {
+    position: absolute;
+    top: 5rem;
+    right: 30rem;
+    transform-origin: center center;
+    transform: rotate(25deg);
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .stamp-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 8rem;
+    border: 2px solid;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0.8;
+    background: transparent;
+  }
+
+  .stamp-zh {
+    font-family: var(--font-chinese);
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .stamp-en {
+    font-size: 0.8rem;
+    font-weight: bold;
+    line-height: 1;
+    margin-top: 0.2rem;
+  }
+
+  /* 完成状态 */
+  .status-complete .stamp-text {
+    color: #4CAF50;
+    border-color: #4CAF50;
+  }
+
+  /* 未完成状态 */
+  .status-incomplete .stamp-text {
+    color: #FFC107;
+    border-color: #FFC107;
+  }
+
+  /* 待改善状态 */
+  .status-needs-improvement .stamp-text {
+    color: #FF5722;
+    border-color: #FF5722;
+  }
+</style>

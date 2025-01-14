@@ -5,7 +5,7 @@ export interface TextPart {
 }
 
 export interface TranslationText {
-  text: TextPart[] | string;
+  text: TextPart[] | string | any;
   ref: string;
 }
 
