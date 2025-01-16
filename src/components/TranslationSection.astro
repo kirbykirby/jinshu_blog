@@ -9,9 +9,17 @@ interface Props {
 
 const { section, index, status } = Astro.props;
 
-const paragraphs = typeof section.english.text === 'string' 
-  ? section.english.text.split('\n').filter(p => p.trim())
-  : section.english.text;
+// 处理中文文本
+const chineseText = Array.isArray(section.chinese.text) 
+  ? section.chinese.text 
+  : [{ type: 'text', content: section.chinese.text as string }];
+
+// 处理英文文本
+const englishText = typeof section.english.text === 'string'
+  ? [section.english.text]
+  : Array.isArray(section.english.text)
+    ? section.english.text
+    : [{ type: 'text', content: String(section.english.text) }];
 ---
 
 <article 
@@ -25,7 +33,7 @@ const paragraphs = typeof section.english.text === 'string'
 >
   <div class="text-container chinese-text" lang="zh">
     <div class="text-content">
-      {section.chinese.text.map(part => (
+      {chineseText.map(part => (
         part.type === 'annotation' 
           ? <span 
               class="footnote-tooltip" 
@@ -53,9 +61,9 @@ const paragraphs = typeof section.english.text === 'string'
 
   <div class="text-container english-text" lang="en">
     <div class="text-content">
-      {paragraphs.map((paragraph, i) => (
-        <p class:list={['paragraph', i < paragraphs.length - 1 && 'mb-4']}>
-          {paragraph}
+      {englishText.map((text, i) => (
+        <p class:list={['paragraph', i < englishText.length - 1 && 'mb-4']}>
+          {typeof text === 'string' ? text : text.content}
         </p>
       ))}
       {section.english.ref && (
@@ -79,8 +87,6 @@ const paragraphs = typeof section.english.text === 'string'
     display: flex;
     gap: clamp(1.5rem, 5vw, 3rem);
     padding: var(--section-padding);
-    padding-top: 0rem;
-    padding-bottom: 0rem;
     background: var(--color-bg-secondary);
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
@@ -121,7 +127,6 @@ const paragraphs = typeof section.english.text === 'string'
   .english-text {
     flex: 2.5;
     font-size: clamp(1rem, 3vw, 1.3rem);
-    padding-top: 1.3rem;
     line-height: 1.8;
     color: var(--color-text-primary);
   }

@@ -1,0 +1,195 @@
+/* Translation Layout */
+.article-container {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .article-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    width: 100%;
+  }
+  
+  /* Article Header */
+  .article-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .article-title-chinese {
+    display: block;
+    font-family: var(--font-chinese);
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+  
+  .article-title-english {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--color-text-secondary);
+  }
+  
+  /* Article Body */
+  .article-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  /* Translation Section Styles */
+  .translation-section {
+    display: flex;
+    gap: clamp(1.5rem, 5vw, 3rem);
+    padding: var(--section-padding, 1.75rem);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  
+  .chinese-text {
+    flex: 1;
+    font-family: var(--font-chinese);
+    font-size: clamp(1.1rem, 3vw, 1.3rem);
+    line-height: 2;
+  }
+  
+  .english-text {
+    flex: 2.5;
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    line-height: 1.8;
+  }
+  
+  .text-content {
+    text-align: justify;
+    text-justify: inter-ideograph;
+    height: 100%;
+    color: var(--color-text-primary);
+  }
+  
+  /* Annotation Styles */
+  .annotation {
+    border-bottom: 1px dashed var(--color-accent);
+    cursor: help;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .annotation:hover {
+    background-color: rgba(212, 163, 115, 0.1);
+  }
+  
+  .tooltip-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    white-space: normal;
+    width: clamp(200px, 50vw, 300px);
+    line-height: 1.5;
+    z-index: 1000;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+  
+  .annotation:hover .tooltip-content,
+  .annotation:focus .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  /* Markdown Content Styles */
+  .article-content :global(h2) {
+    font-family: var(--font-chinese);
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    color: var(--color-text-primary);
+    margin: clamp(2rem, 5vw, 2.5rem) 0 clamp(1rem, 3vw, 1.5rem);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .article-content :global(h3) {
+    font-family: var(--font-chinese);
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    color: var(--color-text-primary);
+    margin: clamp(1.5rem, 4vw, 2rem) 0 clamp(0.75rem, 2vw, 1rem);
+  }
+  
+  .article-content :global(p) {
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+    line-height: 1.8;
+    color: var(--color-text-primary);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .translation-section {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  
+    .chinese-text {
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .article-container {
+      margin-left: 0;
+    }
+  
+    .article-content {
+      padding: 2rem 1rem;
+    }
+  
+    .article-title-chinese {
+      font-size: 2rem;
+    }
+  
+    .article-title-english {
+      font-size: 1.2rem;
+    }
+  
+    .chinese-text,
+    .english-text {
+      font-size: 1rem;
+    }
+  
+    .tooltip-content {
+      width: calc(100vw - 40px);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .translation-section,
+    .annotation,
+    .tooltip-content {
+      transition: none;
+    }
+  }
