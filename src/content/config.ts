@@ -2,9 +2,12 @@ import { defineCollection, z } from 'astro:content';
 
 const documentSchema = z.object({
   title: z.string(),
+  chineseTitle: z.string(),
   englishTitle: z.string(),
   pubDate: z.date(),
   author: z.string().optional(),
+  content: z.string().optional(),
+  status: z.enum(['complete', 'incomplete', 'needs-improvement']).optional(),
 });
 
 export const collections = {
@@ -20,7 +23,7 @@ export const collections = {
     type: 'content',
     schema: documentSchema,
   }),
-  records: defineCollection({
+  blog: defineCollection({
     type: 'content',
     schema: documentSchema,
   }),

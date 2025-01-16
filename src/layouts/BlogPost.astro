@@ -1,6 +1,9 @@
 ---
 import Layout from './Layout.astro';
 import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+import ArticleHeader from '../components/Article/ArticleHeader.astro';
+import ArticleContent from '../components/Article/ArticleContent.astro';
 import '@fontsource/merriweather';
 import type { BlogPost } from '../lib/types';
 
@@ -9,31 +12,22 @@ interface Props {
 }
 
 const { frontmatter } = Astro.props;
-const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-});
 ---
 
 <Layout title={frontmatter.title}>
   <Sidebar />
   <main class="main-content">
     <article class="scholarly-article">
-      <header class="article-header">
-        <h1>{frontmatter.title}</h1>
-        {frontmatter.author && <p class="author">By {frontmatter.author}</p>}
-        <p class="date">{formattedDate}</p>
-      </header>
-      <div class="content">
+      <ArticleHeader frontmatter={frontmatter} />
+      <ArticleContent>
         <slot />
-      </div>
+      </ArticleContent>
     </article>
+    <Footer />
   </main>
 </Layout>
 
 <style>
-  /* Base styles */
   .main-content {
     margin-left: var(--sidebar-width);
     padding: clamp(1rem, 5vw, 3rem);
@@ -55,182 +49,10 @@ const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString('en-US', 
     z-index: 2;
   }
 
-  .article-header {
-    padding: clamp(2rem, 5vw, 4rem);
-    text-align: center;
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg-primary);
-  }
-
-  h1 {
-    font-family: var(--font-chinese);
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
-    line-height: 1.3;
-    margin-bottom: clamp(0.5rem, 2vw, 1rem);
-    color: var(--color-text-primary);
-  }
-
-  .author {
-    font-family: var(--font-english);
-    font-style: italic;
-    color: var(--color-text-secondary);
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .date {
-    font-family: var(--font-english);
-    color: var(--color-text-secondary);
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-  }
-
-  .content {
-    padding: clamp(1.5rem, 5vw, 4rem);
-    font-family: var(--font-english);
-    font-size: clamp(1rem, 2vw, 1.1rem);
-    line-height: 1.8;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: justify;
-    hyphens: auto;
-  }
-
-  /* Content styles with fluid typography */
-  .content :global(h2) {
-    font-family: var(--font-chinese);
-    font-size: clamp(1.4rem, 4vw, 1.8rem);
-    color: var(--color-text-primary);
-    margin: clamp(2rem, 5vw, 2.5rem) 0 clamp(1rem, 3vw, 1.5rem);
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-border);
-    text-align: left;
-  }
-
-  .content :global(h3) {
-    font-family: var(--font-chinese);
-    font-size: clamp(1.2rem, 3vw, 1.4rem);
-    color: var(--color-text-primary);
-    margin: clamp(1.5rem, 4vw, 2rem) 0 clamp(0.75rem, 2vw, 1rem);
-    text-align: left;
-  }
-
-  .content :global(p) {
-    margin-bottom: clamp(1rem, 3vw, 1.5rem);
-    max-width: 100%;
-    text-align: justify;
-    hyphens: auto;
-  }
-
-  .content :global(blockquote) {
-    font-family: var(--font-chinese);
-    margin: clamp(1.5rem, 4vw, 2rem) 0;
-    padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2rem);
-    border-left: 4px solid var(--color-accent);
-    background: var(--color-bg-primary);
-    border-radius: 0.25rem;
-    font-size: clamp(1rem, 2vw, 1.1rem);
-    text-align: left;
-  }
-
-  .content :global(.footnote-ref) {
-    font-size: max(0.7em, 12px);
-    vertical-align: super;
-    color: var(--color-accent);
-    text-decoration: none;
-    margin: 0 0.2em;
-    cursor: help;
-    position: relative;
-  }
-
-  .content :global(.footnote-tooltip) {
-    position: absolute;
-    width: min(300px, 90vw);
-    background: var(--color-bg-primary);
-    border: 1px solid var(--color-border);
-    border-radius: 0.25rem;
-    padding: clamp(0.75rem, 2vw, 1rem);
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    z-index: 100;
-    text-align: left;
-    line-height: 1.5;
-    color: var(--color-text-primary);
-  }
-
-  .content :global(.annotation) {
-    border-bottom: 1px dashed var(--color-accent);
-    cursor: help;
-    position: relative;
-    transition: background-color 0.2s ease;
-  }
-
-  .content :global(.annotation:hover) {
-    background-color: rgba(100, 108, 255, 0.1);
-  }
-
-  /* Responsive breakpoints */
-  @media (max-width: 1400px) {
-    .scholarly-article {
-      width: min(100%, 1200px);
-    }
-    .content {
-      max-width: 1000px;
-    }
-  }
-
   @media (max-width: 768px) {
     .main-content {
       margin-left: 0;
       padding: 4rem 1rem 2rem;
     }
-
-    .article-header {
-      padding: clamp(1.5rem, 4vw, 2rem);
-    }
-
-    .content {
-      padding: clamp(1.5rem, 4vw, 2rem);
-      text-align: left;
-      hyphens: none;
-    }
-
-    .content :global(p) {
-      text-align: left;
-      hyphens: none;
-    }
-  }
-
-  /* Small screens */
-  @media (max-width: 480px) {
-    .content :global(blockquote) {
-      margin: 1.5rem -1rem;
-      border-left-width: 3px;
-      border-radius: 0;
-    }
-  }
-
-  /* Print styles */
-  @media print {
-    .main-content {
-      margin: 0;
-      padding: 0;
-    }
-
-    .scholarly-article {
-      box-shadow: none;
-      border: none;
-    }
-
-    .content :global(.annotation) {
-      border-bottom: none;
-    }
   }
 </style>
-
-<script>
-  import { AnnotationManager } from '../lib/utils/annotations';
-  new AnnotationManager();
-</script>

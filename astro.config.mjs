@@ -4,6 +4,8 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   integrations: [mdx()],
   markdown: {
-    remarkPlugins: ['./src/plugins/remark-scholarly.mjs'],
+    shikiConfig: {
+      theme: 'github-dark'
+    }
   }
 });

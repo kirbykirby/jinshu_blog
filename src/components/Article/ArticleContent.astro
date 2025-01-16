@@ -1,0 +1,220 @@
+---
+---
+
+<article class="content">
+    <slot />
+  </article>
+  
+  <style>
+    .content {
+      padding: clamp(1.5rem, 5vw, 4rem);
+      font-family: var(--font-english);
+      font-size: clamp(1.2rem, 2vw, 1.4rem);
+      line-height: 1.85;
+      max-width: 135ch;
+      margin: 0 auto;
+      color: var(--color-text-primary);
+    }
+  
+    /* Typography */
+    .content :global(h1) {
+      font-family: var(--font-chinese);
+      font-size: clamp(2.1rem, 4vw, 2.475rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--color-text-primary);
+      margin: clamp(2.5rem, 6vw, 3rem) 0 clamp(1.25rem, 3vw, 1.5rem);
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .content :global(h2) {
+      font-family: var(--font-chinese);
+      font-size: clamp(1.7rem, 4vw, 2.075rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--color-text-primary);
+      margin: clamp(2.5rem, 6vw, 3rem) 0 clamp(1.25rem, 3vw, 1.5rem);
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+  
+    .content :global(h3) {
+      font-family: var(--font-chinese);
+      font-size: clamp(1.45rem, 3vw, 1.7rem);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: var(--color-text-primary);
+      margin: clamp(2rem, 5vw, 2.5rem) 0 clamp(1rem, 2vw, 1.25rem);
+    }
+  
+    .content :global(p) {
+      margin-bottom: clamp(1.25rem, 3vw, 1.5rem);
+      color: var(--color-text-secondary);
+    }
+  
+    .content :global(strong) {
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+  
+    .content :global(a) {
+      color: var(--color-accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+  
+    .content :global(a:hover) {
+      border-bottom-color: var(--color-accent);
+    }
+  
+    /* Lists */
+    .content :global(ul),
+    .content :global(ol) {
+      margin: 1.5rem 0;
+      padding-left: 1.5rem;
+      color: var(--color-text-secondary);
+    }
+  
+    .content :global(li) {
+      margin-bottom: 0.5rem;
+    }
+  
+    .content :global(li::marker) {
+      color: var(--color-accent);
+    }
+  
+    /* Blockquotes */
+    .content :global(blockquote) {
+      font-family: var(--font-chinese);
+      margin: clamp(2rem, 5vw, 2.5rem) 0;
+      padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2rem);
+      border-left: 4px solid var(--color-accent);
+      background: var(--color-bg-secondary);
+      border-radius: 0.5rem;
+      font-size: clamp(1.2rem, 2vw, 1.4rem);
+      color: var(--color-text-secondary);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  
+    .content :global(blockquote p) {
+      margin: 0;
+    }
+  
+    /* Code blocks */
+    .content :global(pre) {
+      margin: 1.5rem 0;
+      padding: 1.25rem;
+      border-radius: 0.5rem;
+      background: var(--color-bg-code);
+      overflow-x: auto;
+      font-size: 1.1rem;
+    }
+  
+    /* Annotations */
+    .content :global(.annotation) {
+      border-bottom: 1px dashed var(--color-accent);
+      cursor: help;
+      position: relative;
+      transition: all 0.1s ease;
+    }
+  
+    .content :global(.annotation:hover) {
+      background-color: rgba(var(--color-accent-rgb), 0.1);
+    }
+  
+    .content :global(.annotation::after) {
+      content: attr(data-note);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      padding: 0.875rem 1.25rem;
+      font-size: 1.25rem;
+      color: var(--color-text-secondary);
+      width: max(250px, min(350px, 100vw - 40px));
+      line-height: 1.6;
+      z-index: 1000;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+    }
+  
+    .content :global(.annotation:hover::after) {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+  
+    /* Images */
+    .content :global(img) {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      margin: 2rem 0;
+    }
+  
+    /* Horizontal rule */
+    .content :global(hr) {
+      margin: 3rem 0;
+      border: 0;
+      height: 1px;
+      background: var(--color-border);
+    }
+  
+    @media (max-width: 768px) {
+      .content {
+        padding: clamp(1.25rem, 4vw, 1.5rem);
+      }
+  
+      .content :global(.annotation::after) {
+        width: calc(100vw - 40px);
+        left: 20px;
+        transform: none;
+      }
+  
+      .content :global(.annotation:hover::after) {
+        transform: translateY(0);
+      }
+    }
+  
+    /* Dark mode optimizations */
+    @media (prefers-color-scheme: dark) {
+      .content :global(blockquote) {
+        background: rgba(255, 255, 255, 0.05);
+      }
+  
+      .content :global(.annotation::after) {
+        background: var(--color-bg-secondary);
+        border-color: var(--color-border);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+  
+    /* Print styles */
+    @media print {
+      .content {
+        max-width: none;
+        padding: 0;
+      }
+  
+      .content :global(a) {
+        border-bottom: none;
+      }
+  
+      .content :global(.annotation) {
+        border-bottom: none;
+      }
+  
+      .content :global(.annotation::after) {
+        display: none;
+      }
+    }
+  </style>
