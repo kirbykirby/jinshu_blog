@@ -1,0 +1,43 @@
+---
+layout: ../../layouts/TranslationLayout.astro
+title: "雙語模板 Bilingual Template"
+chineseTitle: "雙語模板"
+englishTitle: "Bilingual Template"
+status: "complete"
+sections: [
+  {
+    chinese: {
+      text: [
+        { type: "text", content: "模板" },
+        { type: "annotation", content: "注釋", note: "注釋文本" },
+      ],
+      ref: "ref1"
+    },
+    english: {
+      text: [
+        { type: "text", content: "Template" }
+      ],
+      ref: "ref1"
+    }
+  },
+  {
+    chinese: {
+      text: [
+        { type: "text", content: "模板" }
+      ],
+      ref: ""
+    },
+    english: {
+      text: [
+        { type: "text", content: "Template" }
+      ],
+      ref: ""
+    }
+  }
+]
+references: [
+  {
+    id: "ref1",
+    text: "Reference Text"
+  },
+]

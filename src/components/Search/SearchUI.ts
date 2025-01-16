@@ -1,4 +1,4 @@
-import { searchContent } from './search';
+import { searchContent } from '../../lib/utils/search';
 
 export class SearchUI {
   private input: HTMLInputElement;
