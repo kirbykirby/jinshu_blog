@@ -1,0 +1,72 @@
+---
+interface Props {
+  placeholder?: string;
+}
+
+const { placeholder = "Search chapters, figures or terms..." } = Astro.props;
+---
+
+<div class="search-input-wrapper">
+  <input 
+    type="search" 
+    placeholder={placeholder}
+    class="search-input"
+    id="search-input"
+    aria-label="搜索内容"
+  />
+  <button class="search-button" id="search-button" aria-label="搜索">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .search-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--color-bg-primary);
+    border: 2px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .search-input-wrapper:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.1);
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--color-text-secondary);
+  }
+
+  .search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-secondary);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .search-button:hover {
+    color: var(--color-accent);
+    background: var(--color-bg-primary);
+  }
+</style>
